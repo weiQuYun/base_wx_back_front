@@ -9,7 +9,7 @@ const Cates  = () => import('@/page/shop/cates.vue');
 // const Cate   = () => import('@/page/system/cate.vue');
 // const Params   = () => import( '@/page/system/params.vue');
 // const List   = () => import( '@/page/system/list.vue');
-// const Add   = () => import( '@/page/system/add.vue');
+const Test   = () => import( '../page/test.vue');
 const Order   = () => import( '@/page/shop/order.vue');
 // const Report   = () => import( '@/page/system/report.vue');
 
@@ -44,10 +44,10 @@ const routes = [
         path:'/menbers',
         component:Menber
       },
-      // {
-      //   path:'/roles',
-      //   component:Roles
-      // },
+      {
+        path:'/test',
+        component:Test
+      },
       // {
       //   path:'/categories',
       //   component:Cate

@@ -224,10 +224,10 @@ export default {
         }
     },
     created(){
-        this.getUserList();
+        this.getData();
     },
     methods:{
-        getUserList(){
+        getData(){
             this.$axios.get('shUser/search',{params:this.queryInfo}).then(res=>{
                 console.log(res);
                 if(res.data.rows ==undefined){
@@ -240,14 +240,14 @@ export default {
         handleSizeChange(newSize){  //监听pagesize 改变
             console.log(newSize);
             this.queryInfo.pagesize = newSize;
-            this.getUserList();
+            this.getData();
 
 
         },
         handleCurrentChange(newPage){  //监听页码值 改变
             console.log(newPage);
             this.queryInfo.pagenum = newPage;
-            this.getUserList();
+            this.getData();
         },
 
         userStateChange(userInfo){    //监听 switch 开关的事件
@@ -278,7 +278,7 @@ export default {
                          }else{
                              this.$notify({ message: '添加用户成功'});
                              this.dialogVisible = false;
-                             this.getUserList();
+                             this.getData();
                          }
                      })
                  }
@@ -311,7 +311,7 @@ export default {
 
                            }
                            this.dialogVisible2 = false;
-                           this.getUserList();
+                           this.getData();
                      })
                  }
             })
@@ -333,7 +333,7 @@ export default {
                                     this.$notify({message:"用户删除失败"});
                                 }else{
                                     this.$notify({message:"用户删除成功"});
-                                     this.getUserList();
+                                     this.getData();
                                 }
                             })
                     }
@@ -366,7 +366,7 @@ export default {
                         return this.$notify({message:'更换新的角色API失败'});
                   }
                   this.$notify({message:'更新角色成功'});
-                  this.getUserList();
+                  this.getData();
                   this.dialogVisible3 = false;
             })
         },

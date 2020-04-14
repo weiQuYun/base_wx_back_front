@@ -16,18 +16,29 @@ import axios from 'axios'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
+import {post,fetch,patch,put} from './utils/http'
+
+
+// import store from './store'
+//定义全局变量
+Vue.prototype.$post=post;
+Vue.prototype.$get=fetch;
+Vue.prototype.$patch=patch;
+Vue.prototype.$put=put;
 
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = 'http://127.0.0.1:60010/'; //配置的请求根路径
+// axios.defaults.withCredentials = true;
+// axios.defaults.headers.post["Access-Control-Allow-Credentials"] = "true";
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 //有些接口需要token验证,此时需要在请求头中使用Authorization提供token令牌.
 axios.interceptors.request.use(config => {  //←request就是请求拦截器
     NProgress.start();  //2.请求就展示进度条
     console.log('token'+ window.sessionStorage.getItem('token'));
     console.log('userId'+ window.sessionStorage.getItem('userId'));
-    config.headers.Authorization = window.sessionStorage.getItem('token');
-    config.headers.token = window.sessionStorage.getItem('token');
-    config.headers.userId = window.sessionStorage.getItem('userId');
+    config.headers.Authorization = JSON.parse(window.sessionStorage.getItem('token'));
+    config.headers.token = JSON.parse(window.sessionStorage.getItem('token'));
+    config.headers.userId = JSON.parse(window.sessionStorage.getItem('userId'));
     return config  //最后必须返回
 })
 //http response 拦截器
@@ -35,8 +46,8 @@ axios.interceptors.request.use(config => {  //←request就是请求拦截器
 axios.interceptors.response.use(
     response => {
       NProgress.done();
-      if(response.data.code !== '200'){
-        this.$notify({ message: '请求失败',duration:1500});
+      if(response.data.code !== 200){
+       console.log(response.data.message);
       }
       return response.data;
     },

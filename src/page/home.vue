@@ -39,8 +39,8 @@
                 </el-submenu>
           </el-menu>
         </el-aside>
-        <el-main>
-          <router-view></router-view>
+        <el-main style="padding: 10px">
+          <router-view style="height:100%"></router-view>
         </el-main>
   </el-container>
 
@@ -54,17 +54,18 @@ export default {
         menulist:[{"id":1,"authName":"菜单","path":"","children":[
                 {"id":2,"authName":"商品管理","path":"shop","order":1,"role":'2'},
                 {"id":3,"authName":"订单管理","path":"orders","order":2,"role":'2'},
-                {"id":4,"authName":"商品分类管理","path":"cates","children":[],"order":3,"role":'1'},
-                {"id":5,"authName":"店铺管理","path":"users","children":[],"order":3,"role":'1'},
-                {"id":6,"authName":"会员管理","path":"menbers","children":[],"order":3,"role":'2'}],
+                {"id":4,"authName":"会员管理","path":"menbers","order":3,"role":'1'},
+                {"id":5,"authName":"商品分类管理","path":"cates","order":3,"role":'1'},
+                {"id":6,"authName":"店铺管理","path":"users","order":3,"role":'1'},
+                {"id":7,"authName":"测试页面","path":"test","order":3,"role":'1'}],
                 "order":2}],
         iconsObj:{
           '1':"el-icon-menu",
           '2':"el-icon-s-goods",
           '3':"el-icon-s-order",
+          '5':"el-icon-user-solid",
           '4':"el-icon-s-grid",
-          '5':"el-icon-s-shop",
-          '6':"el-icon-user-solid"
+          '6':"el-icon-s-shop",
         },
         isCollapse:false, //伸缩
         activePath:'',
@@ -79,7 +80,7 @@ export default {
     logOut() {
       // sessionStorage.clear("/token");
       let req = this.$store.getters.getReq;
-      this.$axios.post('/api/wqy/logout',{'userId':req.userId}).then(data=>{
+      this.$axios.post('/api/wqy/logout',{params:{'userId':JSON.parse(sessionStorage.getItem("userId"))}}).then(data=>{
           if(data.code==="200"){
               this.$router.push("/login");
               return this.$notify({ message: '退出成功',duration:1500});
